@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MICROGREENS | HidroFarm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            color: rgb(245, 248, 246);
+
+            background: linear-gradient(140deg,
+                    #02140b 0%,
+                    #06321a 35%,
+                    #1f6f38 70%,
+                    #cfe8cf 100%);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 80px;
+            background: rgba(5, 48, 22, 0.95);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 25px;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-left {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-left a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.3s;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .nav-left a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.4s ease;
+        }
+
+        .nav-left a:hover {
+            color: #b3d4af;
+            transform: translateY(-2px);
+        }
+
+        .nav-left a:hover::after {
+            width: 100%;
+        }
+
+        .nav-line {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #b7d7a8, #2d7a42, #b7d7a8);
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(13, 73, 34, 0.35);
+        }
+
+        .social-bar {
+            position: fixed;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .social-bar a {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-size: 22px;
+            transition: transform 0.6s ease, box-shadow 0.3s ease;
+        }
+
+        .social-bar a:hover {
+            transform: rotate(360deg) scale(1.1);
+            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp {
+            background: #157c3b;
+        }
+
+        .instagram {
+            background: #053a15;
+        }
+
+        .tiktok {
+            background: #011f10;
+        }
+
+        .email {
+            background: #1f6f38;
+        }
+
+        .hero,
+        .image-panel {
+            position: relative;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-attachment: fixed;
+        }
+
+        .hero::before,
+        .image-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background: linear-gradient(180deg,
+                    rgba(2, 20, 11, 0.75),
+                    rgba(2, 20, 11, 0.35),
+                    rgba(2, 20, 11, 0.75));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero h2 {
+            font-size: 30px;
+            font-style: italic;
+            font-weight: normal;
+            text-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .floating-label {
+            position: relative;
+            z-index: 2;
+            font-size: 42px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: translateY(80px);
+            transition: all 1s ease;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .floating-label.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .info-section {
+            min-height: 100vh;
+            background: linear-gradient(180deg,
+                    #031d0f 0%,
+                    #0b4a27 45%,
+                    #cfe8cf 100%);
+            color: #133313;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 120px 80px;
+        }
+
+        .info-box {
+            max-width: 950px;
+            background: rgba(214, 236, 217, 0.92);
+            border-radius: 8px;
+            padding: 45px;
+            box-shadow: 0 26px 65px rgba(0, 0, 0, 0.28);
+            opacity: 0;
+            transform: translateY(80px);
+            transition: all 1s ease;
+        }
+
+        .info-box.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .info-box h3 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: #355e3b;
+        }
+
+        .info-box p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        /* FIRST TWO PHOTOS SWAPPED HERE */
+        #home {
+            background-image: url("./images/hidrofarm.jpg");
+        }
+
+        #panel1 {
+            background-image: url("./images/aboutus.jpg");
+        }
+
+        #panel2 {
+            background-image: url("./images/historiku.jpg");
+        }
+
+        #panel3 {
+            background-image: url("./images/microgreens.jpg");
+        }
+
+        #panel4 {
+            background-image: url("./images/benefits.jpg");
+        }
+
+        #panel5 {
+            background-image: url("./images/products.jpg");
+        }
+
+        #panel6 {
+            background-image: url("./images/arka.jpg");
+        }
+
+        #panel7 {
+            background-image: url("./images/order.jpg");
+        }
+
+        #panel8 {
+            background-image: url("./images/contact.jpg");
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(70px);
+            transition: all 1s ease;
+        }
+
+        .reveal.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* PRODUKTET STATIC BUBBLE STYLE */
+        .products-section {
+            min-height: 100vh;
+            background: linear-gradient(180deg,
+                    #cfe8cf 0%,
+                    #4f8f5a 45%,
+                    #02140b 100%);
+            color: #203020;
+            padding: 140px 70px 90px;
+        }
+
+        .products-title {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 40px;
+        }
+
+        .products-title h3 {
+            font-size: 48px;
+            color: #355e3b;
+            margin-bottom: 15px;
+        }
+
+        .products-title p {
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .slider-wrapper {
+            max-width: 1300px;
+            margin: auto;
+            overflow: visible;
+            border-radius: 34px;
+            background: rgba(255, 255, 255, 0.22);
+            padding: 45px 35px;
+            box-shadow: 0 22px 55px rgba(0, 0, 0, 0.25);
+        }
+
+        .slider-track {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 35px;
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .product-card {
+            width: 100%;
+            max-width: 260px;
+            min-height: 340px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            transition: 0.35s ease;
+            backdrop-filter: blur(6px);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+        }
+
+
+
+
+
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-info {
+            padding: 18px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .product-info h4 {
+            font-size: 20px;
+            color: #2f5d34;
+            margin-bottom: 8px;
+        }
+
+        .product-info p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #2c3d2c;
+            opacity: 0.85;
+        }
+
+
+        .product-card {
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+        }
+
+        .product-modal {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100dvh;
+            min-height: 100vh;
+            background: rgba(0, 0, 0, 0.72);
+            z-index: 5000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 95px 18px 25px;
+            overscroll-behavior: contain;
+            touch-action: manipulation;
+        }
+
+        .product-modal.active {
+            display: flex;
+        }
+
+        .modal-card {
+            width: min(980px, 100%);
+            max-height: 86vh;
+            overflow-y: auto;
+            background: linear-gradient(180deg, rgba(238, 255, 235, 0.98), rgba(207, 235, 205, 0.98));
+            color: #203020;
+            border-radius: 30px;
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.55);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            padding: 28px;
+            animation: zoomProduct 0.35s ease;
+        }
+
+        @keyframes zoomProduct {
+            from {
+                opacity: 0;
+                transform: scale(0.88);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            width: 42px;
+            height: 42px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(47, 93, 52, 0.95);
+            color: white;
+            font-size: 30px;
+            line-height: 42px;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .modal-card {
+            position: relative;
+        }
+
+        .modal-card img {
+            width: 100%;
+            height: 100%;
+            min-height: 430px;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .modal-details h3 {
+            font-size: 42px;
+            color: #2f5d34;
+        }
+
+        .modal-details p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #263826;
+        }
+
+        .modal-details strong {
+            color: #214d27;
+        }
+
+        .close-hint {
+            margin-top: 8px;
+            font-size: 14px !important;
+            opacity: 0.75;
+            font-style: italic;
+        }
+
+        @media (max-width: 1000px) {
+            .slider-track {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .slider-track {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .slider-wrapper {
+                padding: 30px 18px;
+            }
+
+            .product-card {
+                max-width: 320px;
+                min-height: 360px;
+                border-radius: 18px;
+            }
+
+            .product-card img {
+                height: 190px;
+                border-radius: 0;
+            }
+        }
+
+        .orders-box,
+        .contact-box {
+            text-align: center;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .contact-buttons a {
+            padding: 14px 30px;
+            background: #355e3b;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .contact-buttons a:hover {
+            background: #1f3f24;
+            transform: translateY(-4px);
+        }
+
+        @media (max-width: 1000px) {
+            .nav-left {
+                gap: 14px;
+            }
+
+            .nav-left a {
+                font-size: 14px;
+            }
+
+            .info-section {
+                padding: 140px 35px 70px 85px;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            .hero,
+            .image-panel {
+                background-attachment: scroll;
+            }
+
+            .hero h1 {
+                font-size: 44px;
+            }
+
+            .hero h2 {
+                font-size: 22px;
+            }
+
+            .floating-label {
+                font-size: 28px;
+            }
+
+            .info-box {
+                padding: 28px;
+            }
+
+            .info-box h3,
+            .products-title h3 {
+                font-size: 32px;
+            }
+
+            .info-box p {
+                font-size: 16px;
+            }
+
+            .products-section {
+                padding: 140px 25px 70px 85px;
+            }
+
+            .product-card {
+                min-height: 360px;
+            }
+
+
+            .modal-card {
+                grid-template-columns: 1fr;
+                max-height: 82vh;
+                padding: 18px;
+                gap: 18px;
+            }
+
+            .modal-card img {
+                min-height: 260px;
+                height: 280px;
+            }
+
+            .modal-details h3 {
+                font-size: 30px;
+            }
+
+            .modal-details p {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                min-height: 70px;
+                padding: 10px 12px;
+            }
+
+            .nav-line {
+                top: 70px;
+            }
+
+            .nav-left {
+                gap: 10px;
+            }
+
+            .nav-left a {
+                font-size: 12px;
+            }
+
+            .social-bar {
+                left: 6px;
+                gap: 8px;
+            }
+
+            .social-bar a {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .products-section {
+                padding: 115px 18px 60px 58px;
+            }
+
+            .product-modal {
+                padding: 85px 12px 18px;
+                align-items: flex-start;
+                overflow-y: auto;
+            }
+
+            .modal-card {
+                width: 100%;
+                max-height: none;
+                overflow: visible;
+                border-radius: 22px;
+            }
+
+            .modal-card img {
+                height: 230px;
+                min-height: 230px;
+            }
+        }
+
+
+        /* ===== FIX FINAL PER MOBILE: produktet gjithmone te dukshme ===== */
+        #produktet .reveal,
+        #produktet .slider-wrapper,
+        #produktet .products-title {
+            opacity: 1 !important;
+            transform: none !important;
+            visibility: visible !important;
+        }
+
+        .product-card {
+            opacity: 1 !important;
+            visibility: visible !important;
+            color: #1f331f !important;
+            border: 2px solid rgba(47, 93, 52, 0.25);
+        }
+
+        .product-card img {
+            opacity: 1 !important;
+            visibility: visible !important;
+            background: #d9ead7;
+        }
+
+        .product-info {
+            opacity: 1 !important;
+            visibility: visible !important;
+            background: #ffffff !important;
+        }
+
+        .product-info h4,
+        .product-info p {
+            opacity: 1 !important;
+            visibility: visible !important;
+            color: #183b1c !important;
+        }
+
+        @media (max-width: 700px) {
+            .products-section {
+                padding: 120px 16px 70px 16px !important;
+                background: linear-gradient(180deg,
+                        #cfe8cf 0%,
+                        #4f8f5a 45%,
+                        #02140b 100%) !important;
+            }
+
+            .products-title h3 {
+                color: #183b1c !important;
+                font-size: 34px !important;
+            }
+
+            .products-title p {
+                color: #203020 !important;
+                font-size: 16px !important;
+            }
+
+            .slider-wrapper {
+                padding: 20px 12px !important;
+                background: rgba(255, 255, 255, 0.95) !important;
+            }
+
+            .slider-track {
+                display: grid !important;
+                grid-template-columns: 1fr !important;
+                gap: 22px !important;
+            }
+
+            .product-card {
+                width: 100% !important;
+                max-width: 340px !important;
+                min-height: auto !important;
+                border-radius: 18px !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
+
+            .product-card img {
+                width: 100% !important;
+                height: 210px !important;
+                object-fit: cover !important;
+                display: block !important;
+                border-radius: 16px 16px 0 0 !important;
+            }
+
+            .product-info {
+                padding: 16px !important;
+                min-height: 130px !important;
+            }
+
+            .product-info h4 {
+                font-size: 22px !important;
+            }
+
+            .product-info p {
+                font-size: 15px !important;
+                line-height: 1.55 !important;
+            }
+
+            .product-modal {
+                padding: 70px 12px 20px !important;
+            }
+
+            .modal-card {
+                display: block !important;
+                width: 100% !important;
+                max-height: 84vh !important;
+                padding: 18px !important;
+                border-radius: 22px !important;
+            }
+
+            .modal-image {
+                width: 100% !important;
+                height: 240px !important;
+                object-fit: cover !important;
+                border-radius: 18px !important;
+                margin-bottom: 16px !important;
+                display: block !important;
+            }
+        }
+
+        /* ===== FINAL DARK TO LIGHT GREEN BACKGROUND OVERRIDES ===== */
+        body {
+            background: linear-gradient(140deg,
+                    #02140b 0%,
+                    #06321a 35%,
+                    #1f6f38 70%,
+                    #cfe8cf 100%) !important;
+        }
+
+        .hero::before,
+        .image-panel::before {
+            background: linear-gradient(180deg,
+                    rgba(2, 20, 11, 0.75),
+                    rgba(2, 20, 11, 0.35),
+                    rgba(2, 20, 11, 0.75)) !important;
+        }
+
+        .info-section {
+            background: linear-gradient(180deg,
+                    #031d0f 0%,
+                    #0b4a27 45%,
+                    #cfe8cf 100%) !important;
+        }
+
+        .products-section {
+            background: linear-gradient(180deg,
+                    #cfe8cf 0%,
+                    #4f8f5a 45%,
+                    #02140b 100%) !important;
+        }
+
+        .info-box {
+            background: rgba(214, 236, 217, 0.92) !important;
+            border-radius: 8px !important;
+            box-shadow: 0 26px 65px rgba(0, 0, 0, 0.28) !important;
+        }
+
+
+        /* ===== REAL PRODUCT CARD COLORS ===== */
+        .product-card:nth-child(4n+1) {
+            background: #d7e8d2 !important;
+        }
+
+        .product-card:nth-child(4n+2) {
+            background: #b6d4ad !important;
+        }
+
+        .product-card:nth-child(4n+3) {
+            background: #8fbf86 !important;
+        }
+
+        .product-card:nth-child(4n+4) {
+            background: #5f965b !important;
+        }
+
+        .product-info {
+            background: rgba(248, 252, 247, 0.90) !important;
+        }
+
+
+        .products-title strong {
+            color: #0b3f27;
+            font-weight: 700;
+        }
+
+
+        /* ===== FINAL MOBILE FIXES: text, images, and product popup ===== */
+
+        /* Make section background photos reliable */
+        .hero,
+        .image-panel {
+            min-height: 100vh;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+        }
+
+        /* Make sure image overlays do not hide text */
+        .hero-content,
+        .floating-label,
+        .info-box,
+        .products-title,
+        .slider-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Keep all important text visible even if scroll animation fails */
+        .reveal,
+        .reveal.show,
+        .info-box,
+        .info-box.show,
+        .floating-label,
+        .floating-label.show,
+        .products-title,
+        .slider-wrapper {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+        }
+
+        /* Better product modal on all screens */
+        .product-modal {
+            padding-top: 95px !important;
+        }
+
+        .modal-close {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: sticky !important;
+            top: 0 !important;
+            margin-left: auto !important;
+            margin-bottom: 12px !important;
+            z-index: 10 !important;
+            background: #053016 !important;
+            color: white !important;
+            border: 2px solid rgba(255, 255, 255, 0.35) !important;
+        }
+
+        .modal-card {
+            position: relative !important;
+        }
+
+        @media (max-width: 900px) {
+
+            .hero,
+            .image-panel {
+                background-attachment: scroll !important;
+                min-height: 100vh !important;
+            }
+        }
+
+        @media (max-width: 700px) {
+            body {
+                overflow-x: hidden !important;
+            }
+
+            .navbar {
+                min-height: auto !important;
+                padding: 10px 6px !important;
+            }
+
+            .nav-line {
+                top: 70px !important;
+            }
+
+            .nav-left {
+                gap: 7px !important;
+                line-height: 1.2 !important;
+            }
+
+            .nav-left a {
+                font-size: 10px !important;
+                padding: 2px 0 !important;
+            }
+
+            .hero,
+            .image-panel {
+                height: 100vh !important;
+                min-height: 100vh !important;
+                background-size: cover !important;
+                background-position: center center !important;
+            }
+
+            .hero h1 {
+                font-size: 42px !important;
+            }
+
+            .hero h2 {
+                font-size: 21px !important;
+            }
+
+            .floating-label {
+                font-size: 28px !important;
+                padding: 0 18px !important;
+            }
+
+            .info-section {
+                min-height: auto !important;
+                padding: 120px 18px 70px 58px !important;
+            }
+
+            .info-box {
+                width: 100% !important;
+                padding: 26px 22px !important;
+                border-radius: 8px !important;
+            }
+
+            .info-box h3 {
+                font-size: 30px !important;
+            }
+
+            .info-box p {
+                font-size: 16px !important;
+                line-height: 1.65 !important;
+            }
+
+            .products-section {
+                padding: 115px 16px 70px 16px !important;
+            }
+
+            .products-title {
+                margin-bottom: 25px !important;
+            }
+
+            .products-title h3 {
+                font-size: 34px !important;
+            }
+
+            .products-title p {
+                font-size: 16px !important;
+                line-height: 1.55 !important;
+            }
+
+            .slider-wrapper {
+                padding: 18px 10px !important;
+                border-radius: 18px !important;
+            }
+
+            .slider-track {
+                grid-template-columns: 1fr !important;
+                gap: 24px !important;
+            }
+
+            .product-card {
+                width: 100% !important;
+                max-width: 340px !important;
+                min-height: auto !important;
+                margin: 0 auto !important;
+                display: block !important;
+            }
+
+            .product-card img {
+                width: 100% !important;
+                height: 220px !important;
+                object-fit: cover !important;
+                display: block !important;
+            }
+
+            .product-info {
+                min-height: auto !important;
+                padding: 16px !important;
+            }
+
+            .product-modal {
+                align-items: flex-start !important;
+                justify-content: center !important;
+                overflow-y: auto !important;
+                padding: 72px 12px 24px !important;
+            }
+
+            .modal-card {
+                display: block !important;
+                width: 100% !important;
+                max-height: none !important;
+                overflow: visible !important;
+                padding: 16px !important;
+                border-radius: 14px !important;
+            }
+
+            .modal-close {
+                width: 46px !important;
+                height: 46px !important;
+                font-size: 30px !important;
+                border-radius: 50% !important;
+            }
+
+            .modal-card img {
+                width: 100% !important;
+                height: 240px !important;
+                min-height: 240px !important;
+                object-fit: cover !important;
+                display: block !important;
+                border-radius: 12px !important;
+                margin-bottom: 16px !important;
+            }
+
+            .modal-details h3 {
+                font-size: 28px !important;
+            }
+
+            .modal-details p {
+                font-size: 15px !important;
+                line-height: 1.55 !important;
+            }
+        }
+
+        /* ===== FINAL MODAL FIX: image left, text right, works on laptop + phone ===== */
+        .product-card,
+        .product-card * {
+            -webkit-tap-highlight-color: transparent !important;
+        }
+
+        .product-card {
+            cursor: pointer !important;
+            touch-action: manipulation !important;
+            position: relative !important;
+            z-index: 5 !important;
+        }
+
+        .product-modal.active {
+            display: flex !important;
+        }
+
+        .product-modal {
+            position: fixed !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100dvh !important;
+            background: rgba(0, 0, 0, 0.72) !important;
+            z-index: 99999 !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 96px 16px 22px !important;
+            overflow-y: auto !important;
+        }
+
+        .modal-card {
+            position: relative !important;
+            width: min(1000px, 96%) !important;
+            max-height: 86vh !important;
+            overflow-y: auto !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 30px !important;
+            padding: 28px !important;
+            border-radius: 28px !important;
+            background: linear-gradient(180deg, rgba(238, 255, 235, 0.98), rgba(207, 235, 205, 0.98)) !important;
+            color: #203020 !important;
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.55) !important;
+        }
+
+        .modal-card img {
+            width: 48% !important;
+            max-width: 450px !important;
+            height: 430px !important;
+            min-height: 0 !important;
+            object-fit: cover !important;
+            display: block !important;
+            border-radius: 22px !important;
+            flex-shrink: 0 !important;
+            margin: 0 !important;
+        }
+
+        .modal-details {
+            width: 52% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            gap: 14px !important;
+        }
+
+        .modal-details h3 {
+            font-size: 42px !important;
+            color: #2f5d34 !important;
+            margin: 0 !important;
+        }
+
+        .modal-details p {
+            font-size: 17px !important;
+            line-height: 1.65 !important;
+            color: #263826 !important;
+        }
+
+        .modal-close {
+            position: absolute !important;
+            top: 16px !important;
+            right: 16px !important;
+            width: 46px !important;
+            height: 46px !important;
+            border-radius: 50% !important;
+            border: 2px solid rgba(255, 255, 255, 0.5) !important;
+            background: #053016 !important;
+            color: #fff !important;
+            font-size: 30px !important;
+            cursor: pointer !important;
+            z-index: 10 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+        }
+
+        @media (max-width: 700px) {
+            .product-modal {
+                align-items: flex-start !important;
+                padding: 84px 10px 20px !important;
+            }
+
+            .modal-card {
+                width: 100% !important;
+                max-height: none !important;
+                min-height: auto !important;
+                overflow: visible !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 16px !important;
+                padding: 16px !important;
+                border-radius: 18px !important;
+            }
+
+            .modal-card img {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 240px !important;
+                border-radius: 14px !important;
+            }
+
+            .modal-details {
+                width: 100% !important;
+                padding: 0 2px 6px !important;
+            }
+
+            .modal-details h3 {
+                font-size: 30px !important;
+                padding-right: 48px !important;
+            }
+
+            .modal-details p {
+                font-size: 15px !important;
+                line-height: 1.55 !important;
+            }
+
+            .modal-close {
+                top: 10px !important;
+                right: 10px !important;
+                width: 44px !important;
+                height: 44px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="nav-left">
+            <a href="#home">HIDROFARM</a>
+            <a href="#rreth-nesh">ABOUT US</a>
+            <a href="#historiku">OUR HISTORY</a>
+            <a href="#mikrofilizat">MICROGREENS</a>
+            <a href="#benefitet">BENEFITS</a>
+            <a href="#produktet">PRODUCTS</a>
+            <a href="#arka-jorka">JORKA</a>
+            <a href="#orders">ORDERS</a>
+            <a href="#contacts">CONTACT US</a>
+        </div>
+    </div>
+
+    <div class="nav-line"></div>
+
+    <div class="social-bar">
+        <a href="https://wa.me/355672869556" target="_blank" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.instagram.com/hidro_farm.albania?utm_source=qr&igsh=ZGJ1dWxqbDgzaTRo" target="_blank"
+            class="instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@hidrofarm.albania?_r=1&_t=ZS-9593v8NlNCO" target="_blank" class="tiktok"><i
+                class="fa-brands fa-tiktok"></i></a>
+        <a href="mailto:Hidrofarm.albania@gmail.com" class="email"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>MICROGREENS</h1>
+            <h2>Think Macro...</h2>
+        </div>
+    </section>
+
+    <section class="image-panel" id="panel1">
+        <div class="floating-label reveal">Eat Micro by HidroFarm</div>
+    </section>
+
+    <section class="info-section" id="rreth-nesh">
+        <div class="info-box reveal">
+            <h3>ABOUT US</h3>
+            <p>HidroFarm is an Albanian agricultural brand specialized in high-quality microgreens and fresh produce,
+                grown through modern and sustainable methods.</p>
+            <p>We combine innovation with respect for nature to ensure clean, consistent, and flavorful products from
+                seed to harvest. Our products are trusted by families, restaurants, hotels, and culinary professionals
+                who value both nutrition and presentation.</p>
+            <p>Our mission is to support a healthier lifestyle while contributing to the growth of modern agriculture in
+                Albania.</p>
+        </div>
+    </section>
+
+    <section class="image-panel" id="panel2">
+        <div class="floating-label reveal">Healthy, Natural, Alive.</div>
+    </section>
+
+    <section class="info-section" id="historiku">
+        <div class="info-box reveal">
+            <h3>OUR HISTORY</h3>
+            <p>HidroFarm was founded by individuals with a deep passion for modern agriculture and the use of technology
+                to enhance it. From the very beginning, the vision was clear: to establish a new standard in the
+                production of clean, natural, and high-quality products.</p>
+            <p>Since 2014, HidroFarm has proudly stood as a dedicated Albanian producer, delivering excellence from seed
+                to harvest. Our production represents not only innovation but also a commitment to quality that makes
+                us—and our customers—proud of what Albanian agriculture can achieve.</p>
+            <p>Today, HidroFarm embodies a harmonious blend of nature and innovation, bringing premium products from our
+                farm directly to your table.</p>
+        </div>
+    </section>
+
+    <section class="image-panel" id="panel3">
+        <div class="floating-label reveal">Small greens. Big impact.</div>
+    </section>
+
+    <section class="info-section" id="mikrofilizat">
+        <div class="info-box reveal">
+            <h3>MICROGREENS</h3>
+            <p>Microgreens are the young shoots of plants, harvested at an early stage of growth when their
+                concentration of nutrients, aroma, and color is at its highest.</p>
+            <p>They may be small in size, but they are rich in value. Microgreens are used in salads, sandwiches,
+                smoothies, warm dishes, and professional culinary presentations.</p>
+        </div>
+    </section>
+
+    <section class="image-panel" id="panel4">
+        <div class="floating-label reveal">Fuel Your Glow</div>
+    </section>
+
+    <section class="info-section" id="benefitet">
+        <div class="info-box reveal">
+            <h3>BENEFITS</h3>
+            <p>Microgreens represent a natural concentration of essential nutrients. They are rich in vitamins,
+                minerals, and antioxidants that support a healthy lifestyle and overall well-being.</p>
+            <p>Beyond their nutritional value, microgreens elevate every dish with freshness, vibrant flavor, and an
+                elegant visual appeal. Their versatility makes them ideal not only for daily home consumption but also
+                for professional use in restaurants, hotels, and fine dining, where presentation and taste are equally
+                important.</p>
+            <p>Whether used to enhance nutrition or to create refined, high-end dishes, microgreens bring both health
+                benefits and culinary excellence to the table.</p>
+        </div>
+    </section>
+
+    <section class="image-panel" id="panel5">
+        <div class="floating-label reveal">Fresh products, fresh ideas.</div>
+    </section>
+
+    <section class="products-section" id="produktet">
+        <div class="products-title reveal">
+            <h3>PRODUCTS</h3>
+            <p>Explore our fresh microgreens selection. Each product includes a short description, and you can open it
+                for more details.<br><br>
+                <strong>If you want to know more, click on the product you like.</strong>
+            </p>
+        </div>
+
+        <div class="slider-wrapper reveal">
+            <div class="slider-track">
+                <div class="product-card" tabindex="0" data-name="Micro Mizuna" data-img="./images/mizuna.jpg"
+                    data-desc="A light Japanese-style microgreen with a fresh spicy finish."
+                    data-taste="Lightly spicy, mustard-like."
+                    data-uses="Salad mixes, Asian cuisine, sandwiches, and garnish."
+                    data-nutrition="Rich in vitamins A, C, K, and folate.">
+                    <img src="./images/mizuna.jpg" alt="Micro Mizuna">
+                    <div class="product-info">
+                        <h4>Micro Mizuna</h4>
+                        <p>A light Japanese-style microgreen with a fresh spicy finish.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Pea" data-img="./images/pea.jpg"
+                    data-desc="Sweet, fresh pea shoots with a crunchy texture."
+                    data-taste="Sweet, fresh green pea taste."
+                    data-uses="Salads, wraps, smoothies, sandwiches, and bowls."
+                    data-nutrition="Rich in plant protein and vitamins A and C.">
+                    <img src="./images/pea.jpg" alt="Micro Pea">
+                    <div class="product-info">
+                        <h4>Micro Pea</h4>
+                        <p>Sweet, fresh pea shoots with a crunchy texture.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Mustard" data-img="./images/mustard.jpg"
+                    data-desc="A bold microgreen that adds natural heat to dishes."
+                    data-taste="Strong, spicy, and peppery."
+                    data-uses="Adds heat to salads, sandwiches, meat dishes, and sauces."
+                    data-nutrition="High in vitamins A, C, E, and K.">
+                    <img src="./images/mustard.jpg" alt="Micro Mustard">
+                    <div class="product-info">
+                        <h4>Micro Mustard</h4>
+                        <p>A bold microgreen that adds natural heat to dishes.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Arugula" data-img="./images/arugula.jpg"
+                    data-desc="A peppery microgreen with a strong fresh green aroma." data-taste="Nutty and peppery."
+                    data-uses="Salads, pizza topping, sandwiches, pasta, and bruschetta."
+                    data-nutrition="High in antioxidants and vitamin K.">
+                    <img src="./images/arugula.jpg" alt="Micro Arugula">
+                    <div class="product-info">
+                        <h4>Micro Arugula</h4>
+                        <p>A peppery microgreen with a strong fresh green aroma.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Pak Choi" data-img="./images/pakchoi.jpg"
+                    data-desc="A fresh green microgreen with a soft cabbage-style character."
+                    data-taste="Mild, slightly sweet with a gentle cabbage taste."
+                    data-uses="Stir-fries, Asian dishes, salads, and fresh bowls."
+                    data-nutrition="High in vitamins A, C, and K.">
+                    <img src="./images/pakchoi.jpg" alt="Micro Pak Choi">
+                    <div class="product-info">
+                        <h4>Micro Pak Choi</h4>
+                        <p>A fresh green microgreen with a soft cabbage-style character.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Kohlrabi" data-img="./images/kolhrabi.jpg"
+                    data-desc="A crisp and clean microgreen with a soft cabbage flavor."
+                    data-taste="Mild cabbage flavor, slightly sweet and crisp."
+                    data-uses="Salads, sandwiches, wraps, and garnish."
+                    data-nutrition="Contains vitamin C, vitamin B6, calcium, and iron.">
+                    <img src="./images/kolhrabi.jpg" alt="Micro Kohlrabi">
+                    <div class="product-info">
+                        <h4>Micro Kohlrabi</h4>
+                        <p>A crisp and clean microgreen with a soft cabbage flavor.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Leek" data-img="./images/leek.jpg"
+                    data-desc="A refined aromatic microgreen with a mild onion profile."
+                    data-taste="Mild onion-like, slightly sweet."
+                    data-uses="Soups, salads, egg dishes, fish dishes, and garnish."
+                    data-nutrition="Contains vitamin C and sulfur compounds.">
+                    <img src="./images/leek.jpg" alt="Micro Leek">
+                    <div class="product-info">
+                        <h4>Micro Leek</h4>
+                        <p>A refined aromatic microgreen with a mild onion profile.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Chervil" data-img="./images/chervil.jpg"
+                    data-desc="A delicate herb microgreen for elegant culinary presentation."
+                    data-taste="Delicate, slightly anise-like."
+                    data-uses="Fine cuisine, soups, sauces, fish dishes, and eggs."
+                    data-nutrition="Rich in vitamins A and C.">
+                    <img src="./images/chervil.jpg" alt="Micro Chervil">
+                    <div class="product-info">
+                        <h4>Micro Chervil</h4>
+                        <p>A delicate herb microgreen for elegant culinary presentation.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Sorrel" data-img="./images/sorel.jpg"
+                    data-desc="A bright microgreen with a fresh lemony profile." data-taste="Tangy and lemony."
+                    data-uses="Salads, seafood dishes, sauces, and fine dining garnish."
+                    data-nutrition="High in vitamin C and antioxidants.">
+                    <img src="./images/sorel.jpg" alt="Micro Sorrel">
+                    <div class="product-info">
+                        <h4>Micro Sorrel</h4>
+                        <p>A bright microgreen with a fresh lemony profile.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Borage" data-img="./images/borage.jpg"
+                    data-desc="A refreshing microgreen known for its cucumber-like freshness."
+                    data-taste="Fresh cucumber-like taste." data-uses="Salads, cocktails, cold dishes, and decoration."
+                    data-nutrition="Contains minerals and antioxidants.">
+                    <img src="./images/borage.jpg" alt="Micro Borage">
+                    <div class="product-info">
+                        <h4>Micro Borage</h4>
+                        <p>A refreshing microgreen known for its cucumber-like freshness.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Radish Rose" data-img="./images/radishrose.jpg"
+                    data-desc="A colorful radish microgreen with crisp spicy flavor."
+                    data-taste="Crisp, spicy, radish-like."
+                    data-uses="Salads, garnish, sandwiches, tacos, and gourmet plates."
+                    data-nutrition="Rich in vitamin C and natural enzymes.">
+                    <img src="./images/radishrose.jpg" alt="Micro Radish Rose">
+                    <div class="product-info">
+                        <h4>Micro Radish Rose</h4>
+                        <p>A colorful radish microgreen with crisp spicy flavor.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Radish Rubin"
+                    data-img="./images/radishrubin.jpg"
+                    data-desc="A vibrant radish microgreen with deep color and strong taste."
+                    data-taste="Sharp, spicy, and fresh."
+                    data-uses="Salads, meat dishes, gourmet garnish, and sandwiches."
+                    data-nutrition="Rich in vitamin C and antioxidants.">
+                    <img src="./images/radishrubin.jpg" alt="Micro Radish Rubin">
+                    <div class="product-info">
+                        <h4>Micro Radish Rubin</h4>
+                        <p>A vibrant radish microgreen with deep color and strong taste.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Radish Vulcano"
+                    data-img="./images/radishvulcano.jpg"
+                    data-desc="A bold radish microgreen with intense color and flavor."
+                    data-taste="Strong, spicy, and radish-like."
+                    data-uses="Fine dining, salads, burgers, meat plates, and garnish."
+                    data-nutrition="High in antioxidants and vitamins.">
+                    <img src="./images/radishvulcano.jpg" alt="Micro Radish Vulcano">
+                    <div class="product-info">
+                        <h4>Micro Radish Vulcano</h4>
+                        <p>A bold radish microgreen with intense color and flavor.</p>
+                    </div>
+                </div>
+
+                <div class="product-card" tabindex="0" data-name="Micro Amaranth" data-img="./images/amaranth.jpg"
+                    data-desc="A delicate red microgreen with elegant color and mild earthy notes."
+                    data-taste="Mild, slightly earthy with beet-like notes."
+                    data-uses="Fine dining garnish, salads, and gourmet plating."
+                    data-nutrition="Rich in vitamins C and E, plus antioxidants.">
+                    <img src="./images/amaranth.jpg" alt="Micro Amaranth">
+                    <div class="product-info">
+                        <h4>Micro Amaranth</h4>
+                        <p>A delicate red microgreen with elegant color and mild earthy notes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <div class="product-modal" id="productModal">
+        <div class="modal-card" id="modalCard">
+            <button class="modal-close" id="modalClose" type="button" aria-label="Go back to products">×</button>
+            <img id="modalImg" src="" alt="Produkt i zmadhuar">
+            <div class="modal-details">
+                <h3 id="modalName"></h3>
+                <p id="modalDesc"></p>
+                <p><strong>Flavor and taste:</strong> <span id="modalTaste"></span></p>
+                <p><strong>Mainly what dishes to use:</strong> <span id="modalUses"></span></p>
+                <p><strong>Nutritional value:</strong> <span id="modalNutrition"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <section class="image-panel" id="panel6">
+        <div class="floating-label reveal">Your fresh box, ready to order.</div>
+    </section>
+
+    <section class="info-section" id="arka-jorka">
+        <div class="info-box reveal">
+            <h3>JORKA</h3>
+            <p>To meet the needs of our customers, HidroFarm has developed the concept of a selected box, built on
+                flexibility and practical use.</p>
+            <p>The standard box can include several different codes of microgreens and products, while the personalized
+                box gives customers the opportunity to choose the combination they prefer.</p>
+        </div>
+    </section>
+
+    <section class="image-panel" id="panel7">
+        <div class="floating-label reveal">ORDER NOW</div>
+    </section>
+
+    <section class="info-section" id="orders">
+        <div class="info-box reveal orders-box">
+            <h3>ORDERS</h3>
+            <p>Orders can be placed through Instagram, WhatsApp, email, or direct contact.</p>
+            <p>We offer products for families, restaurants, hotels, and clients who look for freshness and quality every
+                day.</p>
+        </div>
+    </section>
+
+    <section class="image-panel" id="panel8">
+        <div class="floating-label reveal">CONTACT US</div>
+    </section>
+
+    <section class="info-section" id="contacts">
+        <div class="info-box reveal contact-box">
+            <h3>CONTACT US</h3>
+            <p>Contact us for orders, collaborations, or more detailed information about our products.</p>
+            <div class="contact-buttons">
+                <a href="https://wa.me/355672869556" target="_blank">WhatsApp</a>
+                <a href="mailto:Hidrofarm.albania@gmail.com">Email</a>
+                <a href="https://www.instagram.com/hidro_farm.albania?utm_source=qr&igsh=ZGJ1dWxqbDgzaTRo"
+                    target="_blank">Instagram</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const elements = document.querySelectorAll('.reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.25 });
+
+        elements.forEach((el) => observer.observe(el));
+
+        const productCards = document.querySelectorAll('.product-card');
+        const productModal = document.getElementById('productModal');
+        const modalCard = document.getElementById('modalCard');
+        const modalImg = document.getElementById('modalImg');
+        const modalName = document.getElementById('modalName');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalTaste = document.getElementById('modalTaste');
+        const modalUses = document.getElementById('modalUses');
+        const modalNutrition = document.getElementById('modalNutrition');
+        const modalClose = document.getElementById('modalClose');
+
+        function openProduct(card) {
+            modalImg.src = card.dataset.img;
+            modalImg.alt = card.dataset.name;
+            modalName.textContent = card.dataset.name;
+            modalDesc.textContent = card.dataset.desc;
+            modalTaste.textContent = card.dataset.taste;
+            modalUses.textContent = card.dataset.uses;
+            if (modalNutrition) modalNutrition.textContent = card.dataset.nutrition || '';
+            productModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProduct() {
+            productModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        /*
+            PRODUCT POPUP FIX FOR ALL DEVICES
+            - Desktop/laptop: normal mouse click opens the product.
+            - Mobile/tablet: touchstart opens the product immediately.
+            - Event delegation is used so tapping the image OR text inside the card still works.
+        */
+        const sliderTrack = document.querySelector('.slider-track');
+        let lastTouchOpenTime = 0;
+
+        function openProductFromEvent(event) {
+            const card = event.target.closest('.product-card');
+            if (!card) return;
+            openProduct(card);
+        }
+
+        if (sliderTrack) {
+            sliderTrack.addEventListener('touchstart', (event) => {
+                const card = event.target.closest('.product-card');
+                if (!card) return;
+
+                lastTouchOpenTime = Date.now();
+                openProduct(card);
+            }, { passive: true });
+
+            sliderTrack.addEventListener('click', (event) => {
+                /* Avoid double-opening right after a phone touch */
+                if (Date.now() - lastTouchOpenTime < 700) return;
+                openProductFromEvent(event);
+            });
+        }
+
+        productCards.forEach((card) => {
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-label', 'Open product details');
+
+            card.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openProduct(card);
+                }
+            });
+        });
+
+        productModal.addEventListener('click', (event) => {
+            if (event.target === productModal) closeProduct();
+        });
+
+        productModal.addEventListener('touchend', (event) => {
+            if (event.target === productModal) closeProduct();
+        });
+
+        modalClose.addEventListener('click', closeProduct);
+        modalClose.addEventListener('touchend', (event) => {
+            event.preventDefault();
+            closeProduct();
+        }, { passive: false });
+
+        modalCard.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
+        modalCard.addEventListener('touchend', (event) => {
+            event.stopPropagation();
+        });
+
+        document.querySelectorAll('img').forEach((img) => {
+            img.addEventListener('error', () => {
+                img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="%23d9ead7"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="32" fill="%23355e3b">Foto nuk u gjet</text></svg>';
+            }, { once: true });
+        });
+
+
+        // Siguri ekstra: produktet te mos mbeten te padukshme ne mobile nese animacioni nuk aktivizohet
+        document.querySelectorAll('#produktet .reveal, #produktet .slider-wrapper, #produktet .products-title').forEach((el) => {
+            el.classList.add('show');
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.visibility = 'visible';
+        });
+
+
+        // Mobile reliability: force all reveal elements visible after page load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.reveal, .info-box, .floating-label, .products-title, .slider-wrapper').forEach((el) => {
+                el.classList.add('show');
+                el.style.opacity = '1';
+                el.style.visibility = 'visible';
+                el.style.transform = 'none';
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>
