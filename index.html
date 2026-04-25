@@ -1096,34 +1096,25 @@
             }
         }
 
-        /* ===== FINAL MODAL FIX: image left, text right, works on laptop + phone ===== */
-        .product-card,
-        .product-card * {
-            -webkit-tap-highlight-color: transparent !important;
-        }
-
-        .product-card {
-            cursor: pointer !important;
-            touch-action: manipulation !important;
-            position: relative !important;
-            z-index: 5 !important;
-        }
-
-        .product-modal.active {
-            display: flex !important;
-        }
-
+        /* ===== FINAL CORRECT PRODUCT POPUP LAYOUT ===== */
         .product-modal {
             position: fixed !important;
             inset: 0 !important;
             width: 100% !important;
-            height: 100dvh !important;
+            height: 100vh !important;
+            min-height: 100vh !important;
             background: rgba(0, 0, 0, 0.72) !important;
             z-index: 99999 !important;
+            display: none !important;
             align-items: center !important;
             justify-content: center !important;
-            padding: 96px 16px 22px !important;
+            padding: 100px 18px 25px !important;
             overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+
+        .product-modal.active {
+            display: flex !important;
         }
 
         .modal-card {
@@ -1131,26 +1122,27 @@
             width: min(1000px, 96%) !important;
             max-height: 86vh !important;
             overflow-y: auto !important;
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            gap: 30px !important;
-            padding: 28px !important;
-            border-radius: 28px !important;
             background: linear-gradient(180deg, rgba(238, 255, 235, 0.98), rgba(207, 235, 205, 0.98)) !important;
             color: #203020 !important;
+            border-radius: 28px !important;
             box-shadow: 0 35px 90px rgba(0, 0, 0, 0.55) !important;
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 28px !important;
+            padding: 28px !important;
+            animation: zoomProduct 0.25s ease !important;
         }
 
         .modal-card img {
             width: 48% !important;
-            max-width: 450px !important;
-            height: 430px !important;
-            min-height: 0 !important;
+            max-width: 460px !important;
+            height: auto !important;
+            min-height: 360px !important;
             object-fit: cover !important;
-            display: block !important;
             border-radius: 22px !important;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25) !important;
             flex-shrink: 0 !important;
+            display: block !important;
             margin: 0 !important;
         }
 
@@ -1165,81 +1157,104 @@
         .modal-details h3 {
             font-size: 42px !important;
             color: #2f5d34 !important;
-            margin: 0 !important;
+            margin: 0 0 8px !important;
         }
 
         .modal-details p {
             font-size: 17px !important;
             line-height: 1.65 !important;
             color: #263826 !important;
+            margin: 0 !important;
         }
 
         .modal-close {
             position: absolute !important;
-            top: 16px !important;
-            right: 16px !important;
+            top: 14px !important;
+            right: 14px !important;
             width: 46px !important;
             height: 46px !important;
+            border: none !important;
             border-radius: 50% !important;
-            border: 2px solid rgba(255, 255, 255, 0.5) !important;
             background: #053016 !important;
-            color: #fff !important;
-            font-size: 30px !important;
+            color: white !important;
+            font-size: 32px !important;
+            line-height: 46px !important;
             cursor: pointer !important;
-            z-index: 10 !important;
+            z-index: 5 !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            line-height: 1 !important;
+        }
+
+        .product-card,
+        .product-card * {
+            -webkit-tap-highlight-color: transparent !important;
+        }
+
+        .product-card {
+            cursor: pointer !important;
+            touch-action: manipulation !important;
+            pointer-events: auto !important;
+            position: relative !important;
+            z-index: 20 !important;
+        }
+
+        .product-card img,
+        .product-info,
+        .product-info h4,
+        .product-info p {
+            pointer-events: none !important;
         }
 
         @media (max-width: 700px) {
             .product-modal {
                 align-items: flex-start !important;
-                padding: 84px 10px 20px !important;
+                justify-content: center !important;
+                padding: 85px 12px 24px !important;
             }
 
             .modal-card {
                 width: 100% !important;
                 max-height: none !important;
-                min-height: auto !important;
                 overflow: visible !important;
+                display: flex !important;
                 flex-direction: column !important;
-                align-items: stretch !important;
-                gap: 16px !important;
+                gap: 18px !important;
                 padding: 16px !important;
-                border-radius: 18px !important;
+                border-radius: 20px !important;
             }
 
             .modal-card img {
                 width: 100% !important;
                 max-width: 100% !important;
-                height: 240px !important;
-                border-radius: 14px !important;
+                height: 250px !important;
+                min-height: 250px !important;
+                object-fit: cover !important;
+                border-radius: 16px !important;
             }
 
             .modal-details {
                 width: 100% !important;
-                padding: 0 2px 6px !important;
+                padding: 0 4px 8px !important;
             }
 
             .modal-details h3 {
                 font-size: 30px !important;
-                padding-right: 48px !important;
             }
 
             .modal-details p {
-                font-size: 15px !important;
-                line-height: 1.55 !important;
+                font-size: 16px !important;
+                line-height: 1.6 !important;
             }
 
             .modal-close {
-                top: 10px !important;
-                right: 10px !important;
-                width: 44px !important;
-                height: 44px !important;
+                position: sticky !important;
+                top: 0 !important;
+                margin-left: auto !important;
+                margin-bottom: -4px !important;
             }
         }
+
     </style>
 </head>
 
@@ -1614,13 +1629,17 @@
         const modalClose = document.getElementById('modalClose');
 
         function openProduct(card) {
-            modalImg.src = card.dataset.img;
-            modalImg.alt = card.dataset.name;
-            modalName.textContent = card.dataset.name;
-            modalDesc.textContent = card.dataset.desc;
-            modalTaste.textContent = card.dataset.taste;
-            modalUses.textContent = card.dataset.uses;
-            if (modalNutrition) modalNutrition.textContent = card.dataset.nutrition || '';
+            if (!card) return;
+
+            modalImg.src = card.dataset.img || '';
+            modalImg.alt = card.dataset.name || 'Product image';
+
+            modalName.textContent = card.dataset.name || '';
+            modalDesc.textContent = card.dataset.desc || '';
+            modalTaste.textContent = card.dataset.taste || '';
+            modalUses.textContent = card.dataset.uses || '';
+            modalNutrition.textContent = card.dataset.nutrition || '';
+
             productModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1630,41 +1649,32 @@
             document.body.style.overflow = '';
         }
 
-        /*
-            PRODUCT POPUP FIX FOR ALL DEVICES
-            - Desktop/laptop: normal mouse click opens the product.
-            - Mobile/tablet: touchstart opens the product immediately.
-            - Event delegation is used so tapping the image OR text inside the card still works.
-        */
-        const sliderTrack = document.querySelector('.slider-track');
-        let lastTouchOpenTime = 0;
+        let lastOpenTime = 0;
 
         function openProductFromEvent(event) {
             const card = event.target.closest('.product-card');
             if (!card) return;
+
+            const now = Date.now();
+            if (now - lastOpenTime < 250) return;
+            lastOpenTime = now;
+
+            event.preventDefault();
+            event.stopPropagation();
             openProduct(card);
         }
 
-        if (sliderTrack) {
-            sliderTrack.addEventListener('touchstart', (event) => {
-                const card = event.target.closest('.product-card');
-                if (!card) return;
+        // Works for laptop mouse clicks.
+        document.addEventListener('click', openProductFromEvent, true);
 
-                lastTouchOpenTime = Date.now();
-                openProduct(card);
-            }, { passive: true });
+        // Works for iPhone/Android touch.
+        document.addEventListener('touchstart', openProductFromEvent, { passive: false, capture: true });
 
-            sliderTrack.addEventListener('click', (event) => {
-                /* Avoid double-opening right after a phone touch */
-                if (Date.now() - lastTouchOpenTime < 700) return;
-                openProductFromEvent(event);
-            });
-        }
+        // Works for modern phones/tablets and some laptop touchscreens.
+        document.addEventListener('pointerup', openProductFromEvent, true);
 
+        // Keyboard accessibility.
         productCards.forEach((card) => {
-            card.setAttribute('role', 'button');
-            card.setAttribute('aria-label', 'Open product details');
-
             card.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
@@ -1677,13 +1687,22 @@
             if (event.target === productModal) closeProduct();
         });
 
-        productModal.addEventListener('touchend', (event) => {
-            if (event.target === productModal) closeProduct();
+        productModal.addEventListener('touchstart', (event) => {
+            if (event.target === productModal) {
+                event.preventDefault();
+                closeProduct();
+            }
+        }, { passive: false });
+
+        modalClose.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            closeProduct();
         });
 
-        modalClose.addEventListener('click', closeProduct);
-        modalClose.addEventListener('touchend', (event) => {
+        modalClose.addEventListener('touchstart', (event) => {
             event.preventDefault();
+            event.stopPropagation();
             closeProduct();
         }, { passive: false });
 
@@ -1691,13 +1710,13 @@
             event.stopPropagation();
         });
 
-        modalCard.addEventListener('touchend', (event) => {
+        modalCard.addEventListener('touchstart', (event) => {
             event.stopPropagation();
-        });
+        }, { passive: true });
 
         document.querySelectorAll('img').forEach((img) => {
             img.addEventListener('error', () => {
-                img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="%23d9ead7"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="32" fill="%23355e3b">Foto nuk u gjet</text></svg>';
+                img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="%23d9ead7"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="32" fill="%23355e3b">Image not found</text></svg>';
             }, { once: true });
         });
 
